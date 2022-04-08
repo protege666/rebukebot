@@ -20,7 +20,15 @@ def welcome_start(message):
     # global telegram_id
     # print(telegram_id)
 
-@bot.message_handler(commands=['new_rebuke'])
+
+@bot.message_handler(commands=['doc'])
+def send_doc(message):
+    telegram_id = message.from_user.id
+    if telegram_id == 776868996:
+        bot.send_document(message.chat.id, open(r'rebuke.xlsx', 'rb'))
+    else:
+        bot.send_message(message.chat.id, f'Вам не доступна данная команда! Извините:(')
+@bot.message_handler(commands=['rebuke'])
 def change_group(message):
     telegram_id = message.from_user.id
     print(telegram_id)
@@ -56,8 +64,8 @@ def check(message):
             bot.send_message(message.chat.id, f'{string}', reply_markup=a, parse_mode="html")
     elif text == "Снять выговор":
         a = telebot.types.ReplyKeyboardRemove()
-        bot.send_message(message.chat.id, f'Кому?(Введите фамилию)', reply_markup=a)
-        bot.register_next_step_handler(message, del_rebuke)
+        bot.send_message(message.chat.id, f'Кому?(Введите номер по списку)', reply_markup=a)
+        bot.register_next_step_handler(message, from_whom_del)
 
 
 def from_whom(message):
@@ -129,6 +137,7 @@ def from_whom_del(message):
     bot.send_message(message.chat.id, 'От кого?', reply_markup=markup)
     bot.register_next_step_handler(message, del_rebuke)
 
+
 def del_rebuke(message):
     whom = message.text
     telegram_id = message.from_user.id
@@ -149,20 +158,20 @@ def del_rebuke(message):
     if telegram_id == 776868996:
         wb.active = 0
         sheet = wb.active
-        count = sheet[nullstr + str(int(cadet_num) + 1)].value
+        count = sheet[nullstr + str(int(cadet_num_del) + 1)].value
         ncount = int(count)
         ncount -= 1
-        sheet[nullstr + str(int(cadet_num) + 1)].value = ncount
+        sheet[nullstr + str(int(cadet_num_del) + 1)].value = ncount
         wb.save("rebuke.xlsx")
         a = telebot.types.ReplyKeyboardRemove()
         bot.send_message(message.chat.id, 'Сняли)', reply_markup=a)
     elif telegram_id == 1903946634:
         wb.active = 1
         sheet = wb.active
-        count = sheet[nullstr + str(int(cadet_num) + 1)].value
+        count = sheet[nullstr + str(int(cadet_num_del) + 1)].value
         ncount = int(count)
         ncount -= 1
-        sheet[nullstr + str(int(cadet_num) + 1)].value = ncount
+        sheet[nullstr + str(int(cadet_num_del) + 1)].value = ncount
         wb.save("rebuke.xlsx")
         a = telebot.types.ReplyKeyboardRemove()
         bot.send_message(message.chat.id, 'Сняли)', reply_markup=a)
