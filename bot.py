@@ -11,9 +11,9 @@ comandirs = {"Командир 691/11 уч.группы": "1501065385",
              "Командир 691/12 уч.группы": "668569146",
              "Командир 691/2 уч.группы": "1272155176",
              "Командир 691/3 уч.группы": "776868996",  # my id
-             "Командир 692/11 уч.группы": "504",
-             "Командир 692/12 уч.группы": "604",
-             "Командир 695/11 уч.группы": "704",
+             "Командир 692/11 уч.группы": "853467034",
+             "Командир 692/12 уч.группы": "1047619270",
+             "Командир 695/11 уч.группы": "1366455616",
              "Командир 695/12 уч.группы": "553719065"}
 
 
@@ -510,29 +510,29 @@ def change_group(message):
             markup.add(btn1, btn2, btn3)
             bot.send_message(message.chat.id, f'Приветствую тебя, {get_key(comandirs, "776868996")}. Что хочешь сделать?', reply_markup=markup)
             bot.register_next_step_handler(message, check)
-        elif telegram_id == 504:
+        elif telegram_id == 853467034:
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
             btn1 = types.KeyboardButton("Въебать выговор")
             btn2 = types.KeyboardButton("Посмотреть выговоры")
             btn3 = types.KeyboardButton("Снять выговор")
             markup.add(btn1, btn2, btn3)
-            bot.send_message(message.chat.id, f'Приветствую тебя, {get_key(comandirs, "404")}. Что хочешь сделать?', reply_markup=markup)
+            bot.send_message(message.chat.id, f'Приветствую тебя, {get_key(comandirs, "853467034")}. Что хочешь сделать?', reply_markup=markup)
             bot.register_next_step_handler(message, check)
-        elif telegram_id == 604:
+        elif telegram_id == 1047619270:
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
             btn1 = types.KeyboardButton("Въебать выговор")
             btn2 = types.KeyboardButton("Посмотреть выговоры")
             btn3 = types.KeyboardButton("Снять выговор")
             markup.add(btn1, btn2, btn3)
-            bot.send_message(message.chat.id, f'Приветствую тебя, {get_key(comandirs, "404")}. Что хочешь сделать?', reply_markup=markup)
+            bot.send_message(message.chat.id, f'Приветствую тебя, {get_key(comandirs, "1047619270")}. Что хочешь сделать?', reply_markup=markup)
             bot.register_next_step_handler(message, check)
-        elif telegram_id == 704:
+        elif telegram_id == 1366455616:
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
             btn1 = types.KeyboardButton("Въебать выговор")
             btn2 = types.KeyboardButton("Посмотреть выговоры")
             btn3 = types.KeyboardButton("Снять выговор")
             markup.add(btn1, btn2, btn3)
-            bot.send_message(message.chat.id, f'Приветствую тебя, {get_key(comandirs, "404")}. Что хочешь сделать?', reply_markup=markup)
+            bot.send_message(message.chat.id, f'Приветствую тебя, {get_key(comandirs, "1366455616")}. Что хочешь сделать?', reply_markup=markup)
             bot.register_next_step_handler(message, check)
         elif telegram_id == 553719065:
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -549,9 +549,19 @@ def change_group(message):
 
 def check(message):
     try:
+        telegram_id = message.from_user.id
         text = message.text
         if text == "Въебать выговор":
             a = telebot.types.ReplyKeyboardRemove()
+            if telegram_id == 553719065:
+                wb.active = 7
+                sheet = wb.active
+                fullstrk = ''
+                for i in range(2, 24):
+                    strk = str(i - 1) + ") " + str(sheet[i][0].value) + "\n"
+                    fullstrk += strk
+                bot.send_message(message.chat.id, f'{fullstrk}')
+
             bot.send_message(message.chat.id, f'Кому?(Введите номер по списку)', reply_markup=a)
             bot.register_next_step_handler(message, from_whom)
         elif text == "Посмотреть выговоры":
@@ -597,7 +607,7 @@ def check(message):
                     else:
                         pass
                 bot.send_message(message.chat.id, f'{string}', reply_markup=a, parse_mode="html")
-            elif telegram_id == 504:
+            elif telegram_id == 853467034:
                 wb.active = 4
                 sheet = wb.active
                 string = ''
@@ -607,7 +617,7 @@ def check(message):
                     else:
                         pass
                 bot.send_message(message.chat.id, f'{string}', reply_markup=a, parse_mode="html")
-            elif telegram_id == 604:
+            elif telegram_id == 1047619270:
                 wb.active = 5
                 sheet = wb.active
                 string = ''
@@ -617,7 +627,7 @@ def check(message):
                     else:
                         pass
                 bot.send_message(message.chat.id, f'{string}', reply_markup=a, parse_mode="html")
-            elif telegram_id == 704:
+            elif telegram_id == 1366455616:
                 wb.active = 6
                 sheet = wb.active
                 string = ''
@@ -639,6 +649,14 @@ def check(message):
                 bot.send_message(message.chat.id, f'{string}', reply_markup=a, parse_mode="html")
         elif text == "Снять выговор":
             a = telebot.types.ReplyKeyboardRemove()
+            if telegram_id == 553719065:
+                wb.active = 7
+                sheet = wb.active
+                fullstrk = ''
+                for i in range(2, 24):
+                    strk = str(i - 1) + ") " + str(sheet[i][0].value) + "\n"
+                    fullstrk += strk
+                bot.send_message(message.chat.id, f'{fullstrk}')
             bot.send_message(message.chat.id, f'Кому?(Введите номер по списку)', reply_markup=a)
             bot.register_next_step_handler(message, from_whom_del)
     except:
@@ -739,7 +757,7 @@ def add_rebuke(message):
         except:
             a = telebot.types.ReplyKeyboardRemove()
             bot.send_message(message.chat.id, 'Что то пошло не так...', reply_markup=a)
-    elif telegram_id == 504:
+    elif telegram_id == 853467034:
         try:
             wb.active = 4
             sheet = wb.active
@@ -753,7 +771,7 @@ def add_rebuke(message):
         except:
             a = telebot.types.ReplyKeyboardRemove()
             bot.send_message(message.chat.id, 'Что то пошло не так...', reply_markup=a)
-    elif telegram_id == 604:
+    elif telegram_id == 1047619270:
         try:
             wb.active = 5
             sheet = wb.active
@@ -767,7 +785,7 @@ def add_rebuke(message):
         except:
             a = telebot.types.ReplyKeyboardRemove()
             bot.send_message(message.chat.id, 'Что то пошло не так...', reply_markup=a)
-    elif telegram_id == 704:
+    elif telegram_id == 1366455616:
         try:
             wb.active = 6
             sheet = wb.active
@@ -890,7 +908,7 @@ def del_rebuke(message):
         except:
             a = telebot.types.ReplyKeyboardRemove()
             bot.send_message(message.chat.id, 'Что то пошло не так...', reply_markup=a)
-    elif telegram_id == 504:
+    elif telegram_id == 853467034:
         try:
             wb.active = 4
             sheet = wb.active
@@ -904,7 +922,7 @@ def del_rebuke(message):
         except:
             a = telebot.types.ReplyKeyboardRemove()
             bot.send_message(message.chat.id, 'Что то пошло не так...', reply_markup=a)
-    elif telegram_id == 604:
+    elif telegram_id == 1047619270:
         try:
             wb.active = 5
             sheet = wb.active
@@ -918,7 +936,7 @@ def del_rebuke(message):
         except:
             a = telebot.types.ReplyKeyboardRemove()
             bot.send_message(message.chat.id, 'Что то пошло не так...', reply_markup=a)
-    elif telegram_id == 704:
+    elif telegram_id == 1366455616:
         try:
             wb.active = 6
             sheet = wb.active
